@@ -1,0 +1,26 @@
+locals {
+  debug_mode                           = var.debug_mode
+  gsa_owner_group_id                   = var.create_gsa_owner_group ? azurerm_group.gsa_owner.id : var.gsa_owner_group_id
+  key_vault_accesstoken_secret_name    = var.key_vault_accesstoken_secret_name
+  key_vault_admin_password_secret_name = var.key_vault_admin_password_secret_name
+  key_vault_enable_rbac_authorization  = var.key_vault_enable_rbac_authorization
+  key_vault_name                       = var.key_vault_name
+  key_vault_purge_protection_enabled   = var.key_vault_purge_protection_enabled
+  key_vault_sku                        = var.key_vault_sku
+  key_vault_tenantid_secret_name       = var.key_vault_tenantid_secret_name
+  location                             = var.location
+  resource_group_name                  = var.create_resource_group ? azurerm_resource_group.main.name : var.resource_group_name
+  role_definition_resource_substring   = "/providers/Microsoft.Authorization/roleDefinitions"
+  scale_set_instances                  = var.scale_set_instances
+  scale_set_name                       = var.scale_set_name
+  scale_set_password                   = azurerm_key_vault_secret.admin_password.value
+  scale_set_sku                        = var.scale_set_sku
+  scale_set_subnet_id                  = var.scale_set_subnet_id
+  scale_set_username                   = var.scale_set_username
+  spn_id                               = var.spn_id
+  storage_account_name                 = var.storage_account_name
+  storage_account_replication_type     = var.storage_account_replication_type
+  storage_account_tier                 = var.storage_account_tier
+  subscription_id                      = var.subscription_id
+  tenant_id                            = var.tenant_id
+}
