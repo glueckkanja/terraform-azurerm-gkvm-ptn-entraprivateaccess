@@ -70,8 +70,10 @@ resource "azurerm_key_vault_secret" "admin_password" {
   depends_on = [
     azurerm_role_assignment.gsa_kv_grp_secret,
     azurerm_role_assignment.gsa_kv_grp_cert,
+    azurerm_role_assignment.gsa_kv_vmss_contrib,
     azurerm_role_assignment.gsa_kv_spn_secret,
-    azurerm_role_assignment.gsa_kv_spn_cert
+    azurerm_role_assignment.gsa_kv_spn_cert,
+    azurerm_role_assignment.gsa_kv_grp_contrib
   ]
 
   key_vault_id = azurerm_key_vault.this.id
@@ -104,8 +106,10 @@ resource "azurerm_key_vault_secret" "tenant_id" {
   depends_on = [
     azurerm_role_assignment.gsa_kv_grp_secret,
     azurerm_role_assignment.gsa_kv_grp_cert,
+    azurerm_role_assignment.gsa_kv_vmss_contrib,
     azurerm_role_assignment.gsa_kv_spn_secret,
-    azurerm_role_assignment.gsa_kv_spn_cert
+    azurerm_role_assignment.gsa_kv_spn_cert,
+    azurerm_role_assignment.gsa_kv_grp_contrib
   ]
 
   key_vault_id = azurerm_key_vault.this.id
