@@ -1,6 +1,7 @@
 locals {
   debug_mode                           = var.debug_mode
-  gsa_owner_group_id                   = var.create_gsa_owner_group ? azuread_group.gsa_owner[0].id : var.gsa_owner_group_id
+  gsa_owner_group_id                   = var.create_gsa_owner_group ? azuread_group.gsa_owner[0].object_id : var.gsa_owner_group_id
+  gsa_owner_group_members              = var.gsa_owner_group_members
   key_vault_accesstoken_secret_name    = var.key_vault_accesstoken_secret_name
   key_vault_admin_password_secret_name = var.key_vault_admin_password_secret_name
   key_vault_enable_rbac_authorization  = var.key_vault_enable_rbac_authorization

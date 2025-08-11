@@ -153,6 +153,14 @@ Type: `string`
 
 Default: `"00000000-0000-0000-0000-000000000000"`
 
+### <a name="input_gsa_owner_group_members"></a> [gsa\_owner\_group\_members](#input\_gsa\_owner\_group\_members)
+
+Description: The members of the GSA Owner group.
+
+Type: `list(string)`
+
+Default: `[]`
+
 ### <a name="input_key_vault_accesstoken_secret_name"></a> [key\_vault\_accesstoken\_secret\_name](#input\_key\_vault\_accesstoken\_secret\_name)
 
 Description: The name of the secret in the Key Vault that will store the access token.

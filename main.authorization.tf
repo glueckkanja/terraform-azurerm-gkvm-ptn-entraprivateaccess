@@ -2,8 +2,8 @@
 resource "azuread_group" "gsa_owner" {
   count = var.create_gsa_owner_group ? 1 : 0
 
-  display_name = "gsa-owner"
-
+  display_name     = "gsa-owner"
+  members          = var.gsa_owner_group_members
   security_enabled = true
 
   lifecycle {

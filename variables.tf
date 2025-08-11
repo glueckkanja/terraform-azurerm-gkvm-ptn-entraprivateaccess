@@ -93,6 +93,12 @@ variable "gsa_owner_group_id" {
   description = "The ID of the group that will be assigned as GSA owner. This is only used if `create_gsa_owner_group` is set to false."
 }
 
+variable "gsa_owner_group_members" {
+  type        = list(string)
+  default     = []
+  description = "The members of the GSA Owner group."
+}
+
 variable "key_vault_accesstoken_secret_name" {
   type        = string
   default     = "access-token"
