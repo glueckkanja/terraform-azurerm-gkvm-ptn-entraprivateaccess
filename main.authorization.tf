@@ -27,6 +27,12 @@ resource "azurerm_role_assignment" "gsa_kv_vmss_cert" {
   role_definition_name = "Key Vault Certificates Officer"
 }
 
+resource "azurerm_role_assignment" "gsa_kv_vmss_contrib" {
+  principal_id         = azurerm_windows_virtual_machine_scale_set.this.identity[0].principal_id
+  scope                = azurerm_key_vault.this.id
+  role_definition_name = "Key Vault Contributor"
+}
+
 resource "azurerm_role_assignment" "gsa_sa_vmss_data_owner" {
   principal_id         = azurerm_windows_virtual_machine_scale_set.this.identity[0].principal_id
   scope                = azurerm_storage_account.this.id
@@ -49,6 +55,12 @@ resource "azurerm_role_assignment" "gsa_kv_grp_cert" {
   principal_id         = local.gsa_owner_group_id
   scope                = azurerm_key_vault.this.id
   role_definition_name = "Key Vault Certificates Officer"
+}
+
+resource "azurerm_role_assignment" "gsa_kv_grp_contrib" {
+  principal_id         = local.gsa_owner_group_id
+  scope                = azurerm_key_vault.this.id
+  role_definition_name = "Key Vault Contributor"
 }
 
 resource "azurerm_role_assignment" "gsa_kv_spn_secret" {
