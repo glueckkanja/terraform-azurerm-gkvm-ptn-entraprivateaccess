@@ -95,7 +95,7 @@ resource "azurerm_role_assignment" "this" {
   for_each = var.role_assignments
 
   principal_id                           = each.value.principal_id
-  scope                                  = azurerm_linux_web_app.backend.id
+  scope                                  = azurerm_windows_virtual_machine_scale_set.this.id
   condition                              = each.value.condition
   condition_version                      = each.value.condition_version
   delegated_managed_identity_resource_id = each.value.delegated_managed_identity_resource_id
@@ -119,7 +119,7 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
   for_each = var.diagnostic_settings
 
   name                           = each.value.name != null ? each.value.name : "diag-gsa"
-  target_resource_id             = azurerm_linux_web_app.backend.id
+  target_resource_id             = azurerm_windows_virtual_machine_scale_set.this.id
   eventhub_authorization_rule_id = each.value.event_hub_authorization_rule_resource_id
   eventhub_name                  = each.value.event_hub_name
   log_analytics_destination_type = each.value.log_analytics_destination_type

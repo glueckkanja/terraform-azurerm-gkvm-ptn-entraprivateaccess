@@ -1,6 +1,6 @@
 locals {
   debug_mode                           = var.debug_mode
-  gsa_owner_group_id                   = var.create_gsa_owner_group ? azurerm_group.gsa_owner.id : var.gsa_owner_group_id
+  gsa_owner_group_id                   = var.create_gsa_owner_group ? azuread_group.gsa_owner.id : var.gsa_owner_group_id
   key_vault_accesstoken_secret_name    = var.key_vault_accesstoken_secret_name
   key_vault_admin_password_secret_name = var.key_vault_admin_password_secret_name
   key_vault_enable_rbac_authorization  = var.key_vault_enable_rbac_authorization
@@ -9,7 +9,7 @@ locals {
   key_vault_sku                        = var.key_vault_sku
   key_vault_tenantid_secret_name       = var.key_vault_tenantid_secret_name
   location                             = var.location
-  resource_group_name                  = var.create_resource_group ? azurerm_resource_group.main.name : var.resource_group_name
+  resource_group_name                  = var.create_resource_group ? azurerm_resource_group[0].main.name : var.resource_group_name
   role_definition_resource_substring   = "/providers/Microsoft.Authorization/roleDefinitions"
   scale_set_instances                  = var.scale_set_instances
   scale_set_name                       = var.scale_set_name

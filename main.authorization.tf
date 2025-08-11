@@ -4,6 +4,8 @@ resource "azuread_group" "gsa_owner" {
 
   display_name = "gsa-owner"
 
+  security_enabled = true
+
   lifecycle {
     ignore_changes = [
       members,
