@@ -67,21 +67,10 @@ resource "random_password" "admin_password" {
 }
 
 resource "azurerm_key_vault_secret" "admin_password" {
-  depends_on = [
-    azurerm_role_assignment.gsa_kv_grp_secret,
-    azurerm_role_assignment.gsa_kv_grp_cert,
-    azurerm_role_assignment.gsa_kv_vmss_contrib,
-    azurerm_role_assignment.gsa_kv_spn_secret,
-    azurerm_role_assignment.gsa_kv_spn_cert,
-    azurerm_role_assignment.gsa_kv_grp_contrib
-  ]
-
   key_vault_id = azurerm_key_vault.this.id
   name         = local.key_vault_admin_password_secret_name
   value        = random_password.admin_password.result
-}
 
-resource "azurerm_key_vault_secret" "accesstoken" {
   depends_on = [
     azurerm_role_assignment.gsa_kv_grp_secret,
     azurerm_role_assignment.gsa_kv_grp_cert,
@@ -90,10 +79,21 @@ resource "azurerm_key_vault_secret" "accesstoken" {
     azurerm_role_assignment.gsa_kv_spn_cert,
     azurerm_role_assignment.gsa_kv_grp_contrib
   ]
+}
 
+resource "azurerm_key_vault_secret" "accesstoken" {
   key_vault_id = azurerm_key_vault.this.id
   name         = local.key_vault_accesstoken_secret_name
   value        = "placeholder"
+
+  depends_on = [
+    azurerm_role_assignment.gsa_kv_grp_secret,
+    azurerm_role_assignment.gsa_kv_grp_cert,
+    azurerm_role_assignment.gsa_kv_vmss_contrib,
+    azurerm_role_assignment.gsa_kv_spn_secret,
+    azurerm_role_assignment.gsa_kv_spn_cert,
+    azurerm_role_assignment.gsa_kv_grp_contrib
+  ]
 
   lifecycle {
     ignore_changes = [
@@ -103,6 +103,10 @@ resource "azurerm_key_vault_secret" "accesstoken" {
 }
 
 resource "azurerm_key_vault_secret" "tenant_id" {
+  key_vault_id = azurerm_key_vault.this.id
+  name         = local.key_vault_tenantid_secret_name
+  value        = local.tenant_id
+
   depends_on = [
     azurerm_role_assignment.gsa_kv_grp_secret,
     azurerm_role_assignment.gsa_kv_grp_cert,
@@ -111,10 +115,6 @@ resource "azurerm_key_vault_secret" "tenant_id" {
     azurerm_role_assignment.gsa_kv_spn_cert,
     azurerm_role_assignment.gsa_kv_grp_contrib
   ]
-
-  key_vault_id = azurerm_key_vault.this.id
-  name         = local.key_vault_tenantid_secret_name
-  value        = local.tenant_id
 }
 
 # AVM
