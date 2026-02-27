@@ -16,25 +16,25 @@ resource "azuread_group" "gsa_owner" {
 
 # Role Assignments
 resource "azurerm_role_assignment" "gsa_kv_vmss_secret" {
-  principal_id         = azurerm_windows_virtual_machine_scale_set.this.identity[0].principal_id
+  principal_id         = local.scale_set_orchestration_mode == "Flexible" ? azurerm_user_assigned_identity.vmss_uai[0].principal_id : azurerm_windows_virtual_machine_scale_set.this[0].identity[0].principal_id
   scope                = azurerm_key_vault.this.id
   role_definition_name = "Key Vault Secrets Officer"
 }
 
 resource "azurerm_role_assignment" "gsa_kv_vmss_cert" {
-  principal_id         = azurerm_windows_virtual_machine_scale_set.this.identity[0].principal_id
+  principal_id         = local.scale_set_orchestration_mode == "Flexible" ? azurerm_user_assigned_identity.vmss_uai[0].principal_id : azurerm_windows_virtual_machine_scale_set.this[0].identity[0].principal_id
   scope                = azurerm_key_vault.this.id
   role_definition_name = "Key Vault Certificates Officer"
 }
 
 resource "azurerm_role_assignment" "gsa_kv_vmss_contrib" {
-  principal_id         = azurerm_windows_virtual_machine_scale_set.this.identity[0].principal_id
+  principal_id         = local.scale_set_orchestration_mode == "Flexible" ? azurerm_user_assigned_identity.vmss_uai[0].principal_id : azurerm_windows_virtual_machine_scale_set.this[0].identity[0].principal_id
   scope                = azurerm_key_vault.this.id
   role_definition_name = "Key Vault Contributor"
 }
 
 resource "azurerm_role_assignment" "gsa_sa_vmss_data_owner" {
-  principal_id         = azurerm_windows_virtual_machine_scale_set.this.identity[0].principal_id
+  principal_id         = local.scale_set_orchestration_mode == "Flexible" ? azurerm_user_assigned_identity.vmss_uai[0].principal_id : azurerm_windows_virtual_machine_scale_set.this[0].identity[0].principal_id
   scope                = azurerm_storage_account.this.id
   role_definition_name = "Storage Blob Data Owner"
 }

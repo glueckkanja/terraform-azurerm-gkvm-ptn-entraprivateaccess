@@ -211,6 +211,24 @@ variable "scale_set_name" {
   description = "The name of the Windows Virtual Machine Scale Set."
 }
 
+variable "scale_set_platform_fault_domain_count" {
+  type        = number
+  default     = 1
+  description = "The number of fault domains to use for the orchestrated virtual machine scale set."
+}
+
+variable "scale_set_orchestration_mode" {
+  type = string
+  default = "Flexible"
+  description = "The orchestration mode of the virtual machine scale set. Possible values are 'Uniform' and 'Flexible'."
+}
+
+variable "scale_set_uai_name" {
+  type = string
+  default = "vmss-uai"
+  description = "User assigned identity name for VMSS when orchestration mode is set to 'Flexible'. Ignored if orchestration mode is 'Uniform' since it doesn't support user assigned identities."
+}
+
 variable "scale_set_sku" {
   type        = string
   default     = "Standard_D2s_v3"

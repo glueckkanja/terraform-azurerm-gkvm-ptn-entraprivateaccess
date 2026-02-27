@@ -5,10 +5,10 @@ output "next_steps" {
 
 output "resource_id" {
   description = "The ID of Windows Virtual Machine Scale Set"
-  value       = azurerm_windows_virtual_machine_scale_set.this.id
+  value       = local.scale_set_orchestration_mode == "Flexible" ? azurerm_orchestrated_virtual_machine_scale_set.this[0].id : azurerm_windows_virtual_machine_scale_set.this[0].id
 }
 
 output "resource" {
   description = "The whole Windows Virtual Machine Scale Set"
-  value       = azurerm_windows_virtual_machine_scale_set.this
+  value       = local.scale_set_orchestration_mode == "Flexible" ? azurerm_orchestrated_virtual_machine_scale_set.this[0] : azurerm_windows_virtual_machine_scale_set.this[0]
 }
