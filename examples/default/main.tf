@@ -1,5 +1,6 @@
 terraform {
   required_version = "~> 1.9"
+
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
@@ -22,6 +23,7 @@ module "gsa" {
   source  = "glueckkanja/gkvm-ptn-entraprivateaccess/azurerm"
   version = "0.1.0"
 
+  scale_set_subnet_id    = var.scale_set_subnet_id
   subscription_id        = var.subscription_id
   tenant_id              = data.azurerm_client_config.current.tenant_id
   create_gsa_owner_group = var.create_gsa_owner_group
@@ -44,7 +46,6 @@ module "gsa" {
   scale_set_instances                  = var.scale_set_instances
   scale_set_name                       = var.scale_set_name
   scale_set_sku                        = var.scale_set_sku
-  scale_set_subnet_id                  = var.scale_set_subnet_id
   scale_set_username                   = var.scale_set_username
   spn_id                               = var.spn_id
   storage_account_name                 = var.storage_account_name
