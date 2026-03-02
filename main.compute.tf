@@ -1,14 +1,14 @@
 resource "azurerm_windows_virtual_machine_scale_set" "this" {
   count = local.scale_set_orchestration_mode == "Uniform" ? 1 : 0
 
-  admin_password       = local.scale_set_password
-  admin_username       = local.scale_set_username
-  instances            = local.scale_set_instances
-  location             = local.location
-  name                 = local.scale_set_name
-  resource_group_name  = local.resource_group_name
-  sku                  = local.scale_set_sku
-  tags                 = var.tags
+  admin_password      = local.scale_set_password
+  admin_username      = local.scale_set_username
+  instances           = local.scale_set_instances
+  location            = local.location
+  name                = local.scale_set_name
+  resource_group_name = local.resource_group_name
+  sku                 = local.scale_set_sku
+  tags                = var.tags
 
   network_interface {
     name    = "default"
@@ -56,29 +56,26 @@ resource "azurerm_windows_virtual_machine_scale_set" "this" {
 resource "azurerm_user_assigned_identity" "vmss_uai" {
   count = local.scale_set_orchestration_mode == "Flexible" ? 1 : 0
 
-  name                = local.scale_set_uai_name
   location            = local.location
+  name                = local.scale_set_uai_name
   resource_group_name = local.resource_group_name
 }
 
 resource "azurerm_orchestrated_virtual_machine_scale_set" "this" {
-  count = local.scale_set_orchestration_mode == "Flexible" ? 1 : 0 
+  count = local.scale_set_orchestration_mode == "Flexible" ? 1 : 0
 
-  name                        = local.scale_set_name
   location                    = local.location
-  resource_group_name         = local.resource_group_name
+  name                        = local.scale_set_name
   platform_fault_domain_count = local.scale_set_platform_fault_domain_count
+  resource_group_name         = local.resource_group_name
   instances                   = local.scale_set_instances
-  tags                        = var.tags
   sku_name                    = local.scale_set_sku
+  tags                        = var.tags
 
-  os_profile {
-    windows_configuration {
-      admin_username = local.scale_set_username
-      admin_password = local.scale_set_password
-    }
+  identity {
+    identity_ids = [azurerm_user_assigned_identity.vmss_uai[0].id]
+    type         = "UserAssigned"
   }
-
   network_interface {
     name    = "default"
     primary = true
@@ -97,17 +94,16 @@ resource "azurerm_orchestrated_virtual_machine_scale_set" "this" {
       }
     }
   }
-
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }
-
-  identity {
-    type = "UserAssigned"
-    identity_ids = [azurerm_user_assigned_identity.vmss_uai[0].id]
+  os_profile {
+    windows_configuration {
+      admin_password = local.scale_set_password
+      admin_username = local.scale_set_username
+    }
   }
-
   source_image_reference {
     offer     = "WindowsServer"
     publisher = "MicrosoftWindowsServer"

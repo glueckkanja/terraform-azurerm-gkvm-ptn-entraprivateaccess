@@ -29,6 +29,7 @@ The following resources are used by this module:
 - [azurerm_key_vault_secret.tenant_id](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault_secret) (resource)
 - [azurerm_management_lock.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/management_lock) (resource)
 - [azurerm_monitor_diagnostic_setting.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_diagnostic_setting) (resource)
+- [azurerm_orchestrated_virtual_machine_scale_set.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/orchestrated_virtual_machine_scale_set) (resource)
 - [azurerm_resource_group.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) (resource)
 - [azurerm_role_assignment.gsa_kv_grp_cert](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
 - [azurerm_role_assignment.gsa_kv_grp_contrib](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
@@ -44,6 +45,7 @@ The following resources are used by this module:
 - [azurerm_storage_account.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account) (resource)
 - [azurerm_storage_blob.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_blob) (resource)
 - [azurerm_storage_container.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_container) (resource)
+- [azurerm_user_assigned_identity.vmss_uai](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/user_assigned_identity) (resource)
 - [azurerm_virtual_machine_scale_set_extension.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_scale_set_extension) (resource)
 - [azurerm_windows_virtual_machine_scale_set.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/windows_virtual_machine_scale_set) (resource)
 - [modtm_telemetry.telemetry](https://registry.terraform.io/providers/azure/modtm/latest/docs/resources/telemetry) (resource)
@@ -299,6 +301,22 @@ Type: `string`
 
 Default: `"vmss-gsa"`
 
+### <a name="input_scale_set_orchestration_mode"></a> [scale\_set\_orchestration\_mode](#input\_scale\_set\_orchestration\_mode)
+
+Description: The orchestration mode of the virtual machine scale set. Possible values are 'Uniform' and 'Flexible'.
+
+Type: `string`
+
+Default: `"Flexible"`
+
+### <a name="input_scale_set_platform_fault_domain_count"></a> [scale\_set\_platform\_fault\_domain\_count](#input\_scale\_set\_platform\_fault\_domain\_count)
+
+Description: The number of fault domains to use for the orchestrated virtual machine scale set.
+
+Type: `number`
+
+Default: `1`
+
 ### <a name="input_scale_set_sku"></a> [scale\_set\_sku](#input\_scale\_set\_sku)
 
 Description: The SKU of the Windows Virtual Machine Scale Set.
@@ -306,6 +324,14 @@ Description: The SKU of the Windows Virtual Machine Scale Set.
 Type: `string`
 
 Default: `"Standard_D2s_v3"`
+
+### <a name="input_scale_set_uai_name"></a> [scale\_set\_uai\_name](#input\_scale\_set\_uai\_name)
+
+Description: User assigned identity name for VMSS when orchestration mode is set to 'Flexible'. Ignored if orchestration mode is 'Uniform' since it doesn't support user assigned identities.
+
+Type: `string`
+
+Default: `"vmss-uai"`
 
 ### <a name="input_scale_set_username"></a> [scale\_set\_username](#input\_scale\_set\_username)
 
@@ -362,6 +388,10 @@ The following outputs are exported:
 ### <a name="output_next_steps"></a> [next\_steps](#output\_next\_steps)
 
 Description: The Next Steps to take after the deployment.
+
+### <a name="output_resource"></a> [resource](#output\_resource)
+
+Description: The whole Windows Virtual Machine Scale Set
 
 ### <a name="output_resource_id"></a> [resource\_id](#output\_resource\_id)
 

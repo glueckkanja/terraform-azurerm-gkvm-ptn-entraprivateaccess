@@ -14,13 +14,13 @@ locals {
   role_definition_resource_substring    = "/providers/Microsoft.Authorization/roleDefinitions"
   scale_set_instances                   = var.scale_set_instances
   scale_set_name                        = var.scale_set_name
+  scale_set_orchestration_mode          = var.scale_set_orchestration_mode
   scale_set_password                    = azurerm_key_vault_secret.admin_password.value
+  scale_set_platform_fault_domain_count = var.scale_set_platform_fault_domain_count
   scale_set_sku                         = var.scale_set_sku
   scale_set_subnet_id                   = var.scale_set_subnet_id
-  scale_set_username                    = var.scale_set_username
-  scale_set_orchestration_mode          = var.scale_set_orchestration_mode
-  scale_set_platform_fault_domain_count = var.scale_set_platform_fault_domain_count
   scale_set_uai_name                    = var.scale_set_uai_name
+  scale_set_username                    = var.scale_set_username
   spn_id                                = var.spn_id
   storage_account_name                  = var.storage_account_name
   storage_account_replication_type      = var.storage_account_replication_type
