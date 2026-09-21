@@ -59,6 +59,7 @@ resource "azurerm_user_assigned_identity" "vmss_uai" {
   location            = local.location
   name                = local.scale_set_uai_name
   resource_group_name = local.resource_group_name
+  tags                = var.tags
 }
 
 resource "azurerm_orchestrated_virtual_machine_scale_set" "this" {
