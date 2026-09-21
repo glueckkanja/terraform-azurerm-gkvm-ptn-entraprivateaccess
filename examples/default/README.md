@@ -19,17 +19,21 @@ terraform {
 
 provider "azurerm" {
   resource_provider_registrations = "none"
-  tenant_id                       = data.azurerm_client_config.current.tenant_id
-  subscription_id                 = var.subscription_id
-  use_oidc                        = true
+  # tenant_id is intentionally not set here. Reading it from
+  # data.azurerm_client_config, which this very provider serves, makes the
+  # provider depend on itself and Terraform rejects the graph as a cycle.
+  # The provider picks the tenant up from ARM_TENANT_ID / the OIDC login.
+  subscription_id = var.subscription_id
+  use_oidc        = true
   features {}
 }
 
 data "azurerm_client_config" "current" {}
 
 module "gsa" {
-  source  = "glueckkanja/gkvm-ptn-entraprivateaccess/azurerm"
-  version = "0.1.0"
+  # Points at this repository so CI validates the code under review. Pinning a
+  # published version here meant the example never exercised local changes.
+  source = "../../"
 
   scale_set_subnet_id    = var.scale_set_subnet_id
   subscription_id        = var.subscription_id
@@ -92,12 +96,6 @@ Type: `string`
 ### <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id)
 
 Description: The Azure subscription ID in which the resources will be created.
-
-Type: `string`
-
-### <a name="input_tenant_id"></a> [tenant\_id](#input\_tenant\_id)
-
-Description: The Azure Active Directory tenant ID in which the resources will be created.
 
 Type: `string`
 
@@ -245,24 +243,6 @@ Type: `string`
 
 Default: `"westeurope"`
 
-### <a name="input_lock"></a> [lock](#input\_lock)
-
-Description: Controls the Resource Lock configuration for this resource. The following properties can be specified:
-
-- `kind` - (Required) The type of lock. Possible values are `\"CanNotDelete\"` and `\"ReadOnly\"`.
-- `name` - (Optional) The name of the lock. If not specified, a name will be generated based on the `kind` value. Changing this forces the creation of a new resource.
-
-Type:
-
-```hcl
-object({
-    kind = string
-    name = optional(string, null)
-  })
-```
-
-Default: `null`
-
 ### <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name)
 
 Description: The name of the resource group which will be created, if `create_resource_group` is set to true. The name of an existing resource group which should be used to deploy the resources, if `create_resource_group` is set to false.
@@ -383,9 +363,9 @@ The following Modules are called:
 
 ### <a name="module_gsa"></a> [gsa](#module\_gsa)
 
-Source: glueckkanja/gkvm-ptn-entraprivateaccess/azurerm
+Source: ../../
 
-Version: 0.1.0
+Version:
 
 <!-- markdownlint-disable-next-line MD041 -->
 ## Data Collection

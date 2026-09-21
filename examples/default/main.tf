@@ -11,17 +11,21 @@ terraform {
 
 provider "azurerm" {
   resource_provider_registrations = "none"
-  tenant_id                       = data.azurerm_client_config.current.tenant_id
-  subscription_id                 = var.subscription_id
-  use_oidc                        = true
+  # tenant_id is intentionally not set here. Reading it from
+  # data.azurerm_client_config, which this very provider serves, makes the
+  # provider depend on itself and Terraform rejects the graph as a cycle.
+  # The provider picks the tenant up from ARM_TENANT_ID / the OIDC login.
+  subscription_id = var.subscription_id
+  use_oidc        = true
   features {}
 }
 
 data "azurerm_client_config" "current" {}
 
 module "gsa" {
-  source  = "glueckkanja/gkvm-ptn-entraprivateaccess/azurerm"
-  version = "0.1.0"
+  # Points at this repository so CI validates the code under review. Pinning a
+  # published version here meant the example never exercised local changes.
+  source = "../../"
 
   scale_set_subnet_id    = var.scale_set_subnet_id
   subscription_id        = var.subscription_id

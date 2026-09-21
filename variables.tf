@@ -143,8 +143,11 @@ variable "key_vault_tenantid_secret_name" {
 
 variable "location" {
   type        = string
-  default     = "westeurope"
   description = "Azure region where the resource should be deployed."
+  nullable    = false
+
+  # No default on purpose: the AVM specification requires callers to choose the
+  # region explicitly rather than silently inheriting one.
 }
 
 variable "lock" {
@@ -255,8 +258,11 @@ variable "storage_account_name" {
 
 variable "storage_account_replication_type" {
   type        = string
-  default     = "LRS"
+  default     = "ZRS"
   description = "The replication type of the Storage Account. Possible values are 'LRS', 'GRS', 'RAGRS', 'ZRS', 'GZRS', and 'RAGZRS'."
+
+  # ZRS rather than LRS: the Azure resiliency guidance requires storage to be at
+  # least zone-redundant, and ZRS keeps every replica inside the same region.
 }
 
 variable "storage_account_tier" {
