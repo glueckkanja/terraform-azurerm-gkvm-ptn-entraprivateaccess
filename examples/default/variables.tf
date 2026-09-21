@@ -8,10 +8,6 @@ variable "subscription_id" {
   description = "The Azure subscription ID in which the resources will be created."
 }
 
-variable "tenant_id" {
-  type        = string
-  description = "The Azure Active Directory tenant ID in which the resources will be created."
-}
 
 variable "create_gsa_owner_group" {
   type        = bool
@@ -141,24 +137,6 @@ variable "location" {
   description = "Azure region where the resource should be deployed."
 }
 
-variable "lock" {
-  type = object({
-    kind = string
-    name = optional(string, null)
-  })
-  default     = null
-  description = <<DESCRIPTION
-Controls the Resource Lock configuration for this resource. The following properties can be specified:
-
-- `kind` - (Required) The type of lock. Possible values are `\"CanNotDelete\"` and `\"ReadOnly\"`.
-- `name` - (Optional) The name of the lock. If not specified, a name will be generated based on the `kind` value. Changing this forces the creation of a new resource.
-DESCRIPTION
-
-  validation {
-    condition     = var.lock != null ? contains(["CanNotDelete", "ReadOnly"], var.lock.kind) : true
-    error_message = "The lock level must be one of: 'None', 'CanNotDelete', or 'ReadOnly'."
-  }
-}
 
 variable "resource_group_name" {
   type        = string

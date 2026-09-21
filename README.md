@@ -59,6 +59,12 @@ The following resources are used by this module:
 
 The following input variables are required:
 
+### <a name="input_location"></a> [location](#input\_location)
+
+Description: Azure region where the resource should be deployed.
+
+Type: `string`
+
 ### <a name="input_scale_set_subnet_id"></a> [scale\_set\_subnet\_id](#input\_scale\_set\_subnet\_id)
 
 Description: The ID of the subnet where the Windows Virtual Machine Scale Set will be deployed.
@@ -221,14 +227,6 @@ Type: `string`
 
 Default: `"tenant-id"`
 
-### <a name="input_location"></a> [location](#input\_location)
-
-Description: Azure region where the resource should be deployed.
-
-Type: `string`
-
-Default: `"westeurope"`
-
 ### <a name="input_lock"></a> [lock](#input\_lock)
 
 Description: Controls the Resource Lock configuration for this resource. The following properties can be specified:
@@ -363,7 +361,7 @@ Description: The replication type of the Storage Account. Possible values are 'L
 
 Type: `string`
 
-Default: `"LRS"`
+Default: `"ZRS"`
 
 ### <a name="input_storage_account_tier"></a> [storage\_account\_tier](#input\_storage\_account\_tier)
 
