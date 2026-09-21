@@ -9,10 +9,16 @@ on:
       - main
 
 permissions:
-  contents: read
+  contents: read # Required to check out the module sources.
+
+# Superseded pushes to the same branch are wasted work; cancel them.
+concurrency:
+  group: version-check-${{ github.event.pull_request.head.repo.full_name || github.repository }}/${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
 
 jobs:
   version-check:
+    name: version check
     if: github.event.repository.name != 'terraform-azurerm-avm-template'
     runs-on: ubuntu-latest
     steps:

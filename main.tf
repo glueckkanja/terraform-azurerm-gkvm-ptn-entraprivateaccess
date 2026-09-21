@@ -70,6 +70,7 @@ resource "azurerm_key_vault_secret" "admin_password" {
   key_vault_id = azurerm_key_vault.this.id
   name         = local.key_vault_admin_password_secret_name
   value        = random_password.admin_password.result
+  tags         = var.tags
 
   depends_on = [
     azurerm_role_assignment.gsa_kv_grp_secret,
@@ -83,6 +84,7 @@ resource "azurerm_key_vault_secret" "accesstoken" {
   key_vault_id = azurerm_key_vault.this.id
   name         = local.key_vault_accesstoken_secret_name
   value        = "placeholder"
+  tags         = var.tags
 
   depends_on = [
     azurerm_role_assignment.gsa_kv_grp_secret,
@@ -104,6 +106,7 @@ resource "azurerm_key_vault_secret" "tenant_id" {
   key_vault_id = azurerm_key_vault.this.id
   name         = local.key_vault_tenantid_secret_name
   value        = local.tenant_id
+  tags         = var.tags
 
   depends_on = [
     azurerm_role_assignment.gsa_kv_grp_secret,
